@@ -35,7 +35,6 @@ function fix_source(src)
 		if(hh > 12 )
 			return;
 		
-		console.log(hh);
 		found = true;
 		
 		if(ap == "pm")
