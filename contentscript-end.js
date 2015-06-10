@@ -1,20 +1,17 @@
-
-$(function()
+//document.body.innerHTML.replace
+function double_digit(number)
 {
-	function double_digit(number)
-	{
-		var ret = number.toString();
-		if(ret.length == 1)
-			return "0"+ret;
-		else
-			return ret;
-	};
-	
-	var html = $("html").html();
-	var found = false;
-	//alert(html);
+	var ret = number.toString();
+	if(ret.length == 1)
+		return "0"+ret;
+	else
+		return ret;
+};
 
-	html = html.replace(/(\d\d?)(:\d\d)? ?(am|pm)/gi, function(input)
+function fix_source(src)
+{
+	var found = false;
+	src = src.replace(/(\d\d?)(:\d\d)? ?(am|pm)/gi, function(input)
 	{
 		var matches = input.match(/(\d+)|(am|pm)/gi)
 		
@@ -37,6 +34,7 @@ $(function()
 		
 		if(hh > 12 )
 			return;
+		
 		console.log(hh);
 		found = true;
 		
@@ -45,7 +43,14 @@ $(function()
 		
 		return double_digit(hh) + ":" + double_digit(mm);
 	});
+	
+	return [src, found];
+}
 
-	if (found)
-		$("html").html(html);
+$(function()
+{
+	var r = fix_source(document.body.outerHTML);
+	
+	if(r[1])
+		document.body.outerHTML = r[0];
 });
