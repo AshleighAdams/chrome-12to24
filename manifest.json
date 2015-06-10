@@ -8,13 +8,13 @@
 		"256": "icon.png"
 	},
 
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"author": "Kobra",
 
 	"content_scripts": [
 		{
-			"matches": ["http://*/*", "https://*/*"],
-			"js": ["libs.js", "contentscript-end.js"],
+			"matches": ["file://*/*", "http://*/*", "https://*/*"],
+			"js": ["libs.js", "findAndReplaceDOMText.js", "contentscript-end.js"],
 			"run_at": "document_end",
 			"all_frames": true
 		}
@@ -23,6 +23,7 @@
 	"permissions": [
 		"tabs",
 		"http://*/*",
-		"https://*/*"
+		"https://*/*",
+		"file://*/*"
 	]
 }
