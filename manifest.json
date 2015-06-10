@@ -1,17 +1,29 @@
 {
-  "manifest_version": 2,
+	"manifest_version": 2,
 
-  "name": "Chrome extension boilerplate.",
-  "description": "Get started quickly.",
-  "version": "0.0.1",
+	"name": "12h to 24h",
+	"description": "Convert 12h times to 24h times",
+	"version": "0.0.1",
+	"author": "Kobra",
 
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "index.html"
-  },
+	"browser_action": {
+		"default_icon": "icon.png",
+		"default_popup": "index.html"
+	},
+	
+	"content_scripts": [
+		{
+			"matches": ["http://*/*", "https://*/*"],
+			"js": ["libs.js", "contentscript-end.js"],
+			"run_at": "document_end",
+			"all_frames": true
+		}
+	],
 
-  "permissions": [
-    "webNavigation",
-     "tabs"
-  ]
+	"permissions": [
+		"webNavigation",
+		"tabs",
+		"http://*/*",
+		"https://*/*"
+	]
 }
