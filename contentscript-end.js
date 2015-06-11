@@ -58,29 +58,50 @@ function fix_part(input)
 		return double_digit(hh) + ":" + double_digit(mm) + ":" + double_digit(ss);
 }
 
-(function()
+function fix_times()
 {
 	var count = 0;
 	
 	findAndReplaceDOMText(document, {
-		find: /(^|[^a-z0-9])(\d+)(:\d+){0,2} ?(a\.?m\.?|p\.?m\.?)($|[^a-z0-9])/gi,
+		find: /(^|[^a-z0-9])((\d+)(:\d+){0,2} ?(a\.?m\.?|p\.?m\.?))($|[^a-z0-9])/gi,
 		replace: function(part)
 		{
-			if(part.index != 1) // 0 = pre, 1 = center, 2 = post
+			var text, pre, post;
+			
+			console.log(part);
+			
+			if(part.isEnd == true && part.index == 0)
+			{
+				text = part.text;
+				
+				pre = text[0];
+				post = text[text.length - 1];
+				text = text
+					.substring(1, text.length - 1)
+					.toLowerCase()
+					.replace(".", "");
+			}
+			else if(part.index == 1)
+			{
+				text = part.text;
+				pre = "";
+				post = "";
+				text = text
+					.toLowerCase()
+					.replace(".", "");
+			}
+			else
 				return part.text;
 			
-			var text = part.text;
-			
-			text = text
-				.toLowerCase()
-				.replace(".", "");
-			
 			count += 1;
-			return fix_part(text);
+			return pre + fix_part(text) + post;
 		}
 	});
 	
 	if(count != 0)
 		console.log("replaced " + count + " 12h times with 24h times");
-})();
+}
+
+setTimeout(fix_times, 0);
+setTimeout(fix_times, 1000);
 
